@@ -16,15 +16,15 @@ import static org.mockito.Mockito.when;
 
 @RunWith(SpringRunner.class)
 public class UserServiceTest {
-    @Autowired
-    UserService userService;
+
 
     @MockBean
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Test
     public void should_return_true_when_call_addUser_given_user(){
-        User user = new User("tmy");
+        User user = new User( "tmy");
+        UserService userService = new UserService(userRepository);
         when(userRepository.findById(anyLong())).thenReturn(null);
 
         boolean result = userService.addUser(user);
