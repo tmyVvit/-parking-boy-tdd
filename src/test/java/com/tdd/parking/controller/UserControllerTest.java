@@ -14,9 +14,10 @@ import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 
+import java.util.UUID;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.mock;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -35,11 +36,11 @@ public class UserControllerTest {
     @Test
     public void should_get_204_no_content_status_when_post_user() throws Exception{
         User user = new User("tmy");
-        given(userService.addUser(any(User.class))).willReturn(true);
+        given(userService.addUser(any(User.class))).willReturn(UUID.randomUUID().toString());
 
         mockMvc.perform(post("/api/v1/users")
                 .contentType(MediaType.APPLICATION_JSON_VALUE)
                 .content(mapper.writeValueAsString(user)))
-                .andExpect(status().is(204));
+                .andExpect(status().is(201));
     }
 }

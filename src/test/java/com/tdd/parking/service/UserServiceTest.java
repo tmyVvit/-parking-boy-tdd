@@ -10,6 +10,7 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import static org.assertj.core.internal.bytebuddy.matcher.ElementMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertTrue;
 import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.when;
@@ -27,9 +28,9 @@ public class UserServiceTest {
         UserService userService = new UserService(userRepository);
         when(userRepository.findById(anyLong())).thenReturn(null);
 
-        boolean result = userService.addUser(user);
+        String result = userService.addUser(user);
 
-        assertTrue(result);
+        assertNotNull(result);
     }
 
 }

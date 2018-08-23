@@ -1,7 +1,9 @@
 package com.tdd.parking.controller;
 
 import com.tdd.parking.entity.User;
+import com.tdd.parking.exception.BadRequestException;
 import com.tdd.parking.service.UserService;
+import javassist.tools.web.BadHttpRequest;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,10 +20,11 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity addUser(@RequestBody User user){
-        if(userService.addUser(user)){
-         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+        String pwd = userService.addUser(user);
+        if(pwd != null){
+         return ResponseEntity.status(HttpStatus.CREATED).body(pwd);
         }
-        return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        throw new BadRequestException();
     }
 
 }
